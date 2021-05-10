@@ -1,8 +1,13 @@
 import json
 
-from docxtpl import DocxTemplate
+from docx2pdf import convert
+from docxtpl import DocxTemplate, InlineImage
+from docx.shared import Mm
 
 CONTRACTEE = "CONTRACTEE NAME"
+ESIG = "resources/alex-esig.png"
+ESIG_WIDTH = 40 #mm
+ESIG_HEIGHT = 25 #mm
 POSITION = "Junior Test Position"
 
 
@@ -18,6 +23,10 @@ def create_cwa(accomplishments):
         split_period = accom_period.split()
         last_day = split_period[1].split("-")[1].strip(",")
 
+        # Add signature img
+        esig = InlineImage(
+            doc, image_descriptor=ESIG, width=Mm(40), height=Mm(20)
+        )
         context = {
             "position": POSITION,
             "period": accom_period,  # Date is the default key
@@ -25,6 +34,7 @@ def create_cwa(accomplishments):
             "accom_month": f"{split_period[0]} {split_period[2]}",
             "accomplishments": accomplishments[accom_period],
             "contractee": CONTRACTEE,
+            "esig": esig
         }
 
         doc.render(context)
@@ -36,3 +46,4 @@ def create_cwa(accomplishments):
 if __name__ == "__main__":
     accomplishments = get_accomplishments("accomplishments.json")
     create_cwa(accomplishments)
+    convert("outputs/") # Convert .docx files in the output directory
