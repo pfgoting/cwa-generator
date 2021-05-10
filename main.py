@@ -1,4 +1,5 @@
 import json
+import os
 
 from docx2pdf import convert
 from docxtpl import DocxTemplate, InlineImage
@@ -17,8 +18,8 @@ def get_accomplishments(filename):
 
 
 def create_cwa(accomplishments):
-    doc = DocxTemplate("templates/cert-of-work-accomplishment_template.docx")
     for accom_period in accomplishments:
+        doc = DocxTemplate("templates/cert-of-work-accomplishment_template.docx")
         print(accom_period)
         split_period = accom_period.split()
         last_day = split_period[1].split("-")[1].strip(",")
@@ -42,8 +43,12 @@ def create_cwa(accomplishments):
             f"outputs/CWA_{CONTRACTEE.split()[-1]}_{split_period[0]}_{last_day}.docx"
         )
 
-
-if __name__ == "__main__":
+def main():
+    os.makedirs('outputs/', exist_ok=True)
     accomplishments = get_accomplishments("accomplishments.json")
     create_cwa(accomplishments)
+
+
+if __name__ == "__main__":
+    main()
     convert("outputs/") # Convert .docx files in the output directory
