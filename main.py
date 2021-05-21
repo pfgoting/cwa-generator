@@ -1,18 +1,17 @@
 import json
+import logging
 import os
 import subprocess
-import logging
 
-from docx2pdf import convert
 from docx.shared import Mm
 from docxtpl import DocxTemplate, InlineImage
 
 CONTRACTEE = "CONTRACTEE NAME"
 ESIG = "resources/alex-esig.png"
-ESIG_WIDTH = 40 #mm
-ESIG_HEIGHT = 25 #mm
+ESIG_WIDTH = 40  # mm
+ESIG_HEIGHT = 25  # mm
 POSITION = "Junior Test Position"
-logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 
 
 def get_accomplishments(filename):
@@ -53,8 +52,8 @@ def create_cwa(accomplishments):
 
 def convert_docs(output_folder):
     """
-        Converts docx files in a folder if there is no existing PDF
-        for that file.
+    Converts docx files in a folder if there is no existing PDF
+    for that file.
     """
     for file in (directory := os.listdir(output_folder)):
         if file.endswith(".docx"):
