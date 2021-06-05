@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 docxtpl = "*"
 docx2pdf = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pre-commit = "*"

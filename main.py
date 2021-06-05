@@ -5,12 +5,14 @@ import subprocess
 
 from docx.shared import Mm
 from docxtpl import DocxTemplate, InlineImage
+from dotenv import load_dotenv
 
-CONTRACTEE = "CONTRACTEE NAME"
-ESIG = "resources/alex-esig.png"
-ESIG_WIDTH = 40  # mm
-ESIG_HEIGHT = 25  # mm
-POSITION = "Junior Test Position"
+load_dotenv()
+CONTRACTEE = os.getenv("CONTRACTEE_NAME", "Alexander Hamilton")
+ESIG = os.getenv("ESIG_LOCATION", "resources/alex-esig.png")
+ESIG_WIDTH = os.getenv("ESIG_WIDTH_MM", 40)  # mm
+ESIG_HEIGHT = os.getenv("ESIG_HEIGHT_MM", 25)  # mm
+POSITION = os.getenv("POSITION", "Junior Test Position")
 logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 
 

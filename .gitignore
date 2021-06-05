@@ -1,3 +1,5 @@
 outputs
 .vscode
 .DS_Store
+.env
+resources/E-SIG_GOTING-nobg.png
