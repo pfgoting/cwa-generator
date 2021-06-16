@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 load_dotenv()
 CONTRACTEE = os.getenv("CONTRACTEE_NAME", "Alexander Hamilton")
 ESIG = os.getenv("ESIG_LOCATION", "resources/alex-esig.png")
-ESIG_WIDTH = os.getenv("ESIG_WIDTH_MM", 40)  # mm
-ESIG_HEIGHT = os.getenv("ESIG_HEIGHT_MM", 25)  # mm
+ESIG_WIDTH = int(os.getenv("ESIG_WIDTH_MM", 40))  # mm
+ESIG_HEIGHT = int(os.getenv("ESIG_HEIGHT_MM", 25))  # mm
 POSITION = os.getenv("POSITION", "Junior Test Position")
 logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 
