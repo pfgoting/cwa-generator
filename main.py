@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import subprocess
+from datetime import datetime as dt
 
 from docx.shared import Mm
 from docxtpl import DocxTemplate, InlineImage
@@ -21,7 +22,7 @@ def get_accomplishments(filename):
         return json.load(js)
 
 
-def create_cwa(accomplishments):
+def create_cwa(accomplishments, date_accomplished_now=False):
     for accom_period in accomplishments:
         doc = DocxTemplate("templates/cert-of-work-accomplishment_template.docx")
         split_period = accom_period.split()
@@ -37,6 +38,8 @@ def create_cwa(accomplishments):
             esig = InlineImage(
                 doc, image_descriptor=ESIG, width=Mm(ESIG_WIDTH), height=Mm(ESIG_HEIGHT)
             )
+            if date_accomplished_now:
+                last_day = dt.now().date().day
             context = {
                 "position": POSITION,
                 "period": accom_period,  # Date is the default key
@@ -81,12 +84,12 @@ def convert_docs(output_folder):
                 # print(stdout, stderr)
 
 
-def main():
+def main(date_accomplished_now=True):
     os.makedirs("outputs/", exist_ok=True)
     accomplishments = get_accomplishments("accomplishments.json")
-    create_cwa(accomplishments)
+    create_cwa(accomplishments, date_accomplished_now=date_accomplished_now)
 
 
 if __name__ == "__main__":
-    main()
+    main(date_accomplished_now=True)
     convert_docs("outputs/")  # Convert .docx files in the output directory
